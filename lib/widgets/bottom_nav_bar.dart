@@ -29,7 +29,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         selectedItemColor: Colors.red,
         onTap: (int index) {
           pageController.animateToPage(index,
-              duration: Duration(milliseconds: 400), curve: Curves.ease);
+              duration: const Duration(milliseconds: 400), curve: Curves.ease);
 
           setState(() {
             currentPage = index;
