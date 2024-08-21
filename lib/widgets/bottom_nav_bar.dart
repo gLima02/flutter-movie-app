@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/pages/future_page.dart';
 import 'package:movie_app/pages/home/home_page.dart';
 import 'package:movie_app/pages/search/search_page.dart';
 import 'package:movie_app/pages/top_rated/top_rated_page.dart';
@@ -18,7 +19,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: PageView(
         controller: pageController,
-        children: const [HomePage(), SearchPage(), TopRatedPage()],
+        children: const [
+          //HomePage(), <-- comentada pra teste de Future/async/await
+          FuturePage(),
+          SearchPage(), 
+          TopRatedPage()
+          ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
