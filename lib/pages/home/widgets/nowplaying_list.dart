@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/movie_model.dart';
-import 'package:movie_app/services/api_services.dart';
 import 'package:movie_app/widgets/custom_card_thumbnail.dart';
 
 class NowPlayingList extends StatefulWidget {
-  const NowPlayingList({super.key});
+  final List<Movie> movies;
+  const NowPlayingList({super.key, required this.movies});
 
   @override
   State<NowPlayingList> createState() => _NowPlayingListState();
 }
 
 class _NowPlayingListState extends State<NowPlayingList> {
-  ApiServices apiServices = ApiServices();
-  List<Movie> movies = [];
-
-  @override
-  void initState() {
-    movies = apiServices.getMovies();
-    super.initState();
-  }
-
+  final PageController _pageController = PageController(viewportFraction: 0.9);
+  int currentPage=0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,9 +20,18 @@ class _NowPlayingListState extends State<NowPlayingList> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.5,
           child: PageView.builder(
-            itemCount: movies.length,
+            onPageChanged: (int page) {
+              setState(() {
+                currentPage = page;
+              });
+
+            },
+            controller: _pageController,
+            itemCount: widget.movies.length,
             itemBuilder: (context, index) {
-              return CustomCardThumbnail(imageAsset: movies[index].posterPath);
+              return CustomCardThumbnail(
+                imageAsset: widget.movies[index].posterPath,
+              );
             },
           ),
         ),
@@ -42,7 +44,11 @@ class _NowPlayingListState extends State<NowPlayingList> {
   }
 
   List<Widget> _buildPageIndicators() {
-    return [];
+      List<Widget> indicators = [];
+    for (var i = 0; i < widget.movies.length; i++) {
+      indicators.add(_buildIndicator(i == currentPage));
+    }
+    return indicators;
   }
 
   Widget _buildIndicator(bool isActive) {
