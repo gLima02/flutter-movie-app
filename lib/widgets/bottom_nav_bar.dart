@@ -17,11 +17,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: const [
-          HomePage(),
-          SearchPage(),
-          TopRatedPage(),
-        ],
+        controller: pageController,
+        children: const [HomePage(), SearchPage(), TopRatedPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
@@ -30,16 +27,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
         onTap: (int index) {
           pageController.animateToPage(index,
               duration: const Duration(milliseconds: 400), curve: Curves.ease);
-
           setState(() {
             currentPage = index;
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.trending_up), label: 'Top rated')
+              icon: Icon(Icons.trending_up_outlined), label: "Top Rated"),
         ],
       ),
     );
